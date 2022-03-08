@@ -38,21 +38,6 @@ bindkey '^[[1;2C' forward-word
 bindkey "^[k" history-beginning-search-backward
 bindkey "^[j" history-beginning-search-forward
 
-toggle_vpn() { 
-	date +%H%M%S
-	if [ $(networksetup -showpppoestatus "VPN (L2TP)") = connected ]
-	then
-		echo disconnect
-		networksetup -disconnectpppoeservice "VPN (L2TP)"
-	else
-		echo connect
-		networksetup -connectpppoeservice "VPN (L2TP)" && sleep 1 && 
-	   		sudo route add -net 10.5.0.0/16 -interface ppp0
-	fi 
-}
-zle -N toggle_vpn
-bindkey '^[n' toggle_vpn
-
 cd_last() { cd - }
 zle -N cd_last
 bindkey '^^' cd_last
